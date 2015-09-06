@@ -11,7 +11,7 @@
     "nodejs",
     "browser"
   ],
-  "main": "src/Code",
+  "main": "src/CodeFactory",
   "repository": {
     "type": "git",
     "url": "https://github.com/gregl83/codejs.git"
