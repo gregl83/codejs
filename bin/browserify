@@ -1,0 +1,28 @@
+#!/usr/bin/env node
+
+var fs = require('fs');
+var path = require('path');
+
+var browserify = require('browserify');
+
+var packageJSON = require('../package.json');
+
+var filename = 'codejs-' + packageJSON.version + '.min.js';
+var filepath = path.resolve('./' + filename);
+
+// remove old builds
+var files = fs.readdirSync('./');
+
+files.forEach(function(file) {
+  if (file.match(/^codejs\-[0-9]+\.[0-9]+\.[0-9]+\.min\.js$/)) {
+    var oldFilePath = path.resolve('./', file);
+    fs.unlinkSync(oldFilePath)
+  }
+});
+
+// build latest version
+var out = fs.createWriteStream(filepath);
+
+var b = browserify();
+b.add('./');
+b.bundle().pipe(out);
