@@ -23,16 +23,20 @@ module.exports = function(options) {
   // validate options main properties
   if ('string' !== typeof options.separator) throw new Error('options.separator must be type string');
 
-  if (!Array.isArray(options.parts)) throw new Error('options.parts must be type array');
-
-  if ('undefined' !== typeof options.regex && 'string' !== typeof options.regex) throw new Error('options.regex must be type string');
+  if (!Array.isArray(options.parts) || 0 === options.parts.length) throw new Error('options.parts must be type array');
 
   // build class options
   var opts = {
     "separator": options.separator,
     "parts": [],
-    "regex": options.regex
+    "regex": undefined
   };
+
+  // validate main regex option
+  if ('undefined' !== typeof options.regex) {
+    if ('string' === typeof options.regex) opts.regex = new RegExp(options.regex);
+    else throw new Error('options.regex must be type string');
+  }
 
   // validate part options
   options.parts.forEach(function(part) {
@@ -40,11 +44,14 @@ module.exports = function(options) {
 
     if ('string' !== part.type && 'number' !== part.type) throw new Error('options.part.type must be "string" or "number"');
 
-    if ('string' === typeof part.regex) part.regex = new RegExp(part.regex);
+    if ('undefined' !== typeof part.regex) {
+      if ('string' === typeof part.regex) part.regex = new RegExp(part.regex);
+      else throw new Error('options.part.regex must be type string');
+    }
 
-    if ('undefined' !== typeof part.default && 'string' !== part.default && 'number' !== part.default) throw new Error('options.part.default must be type string or number');
+    if ('undefined' !== typeof part.default && 'string' !== typeof part.default && 'number' !== typeof part.default) throw new Error('options.part.default must be type string or number');
 
-    if ('undefined' !== typeof part.separator && 'string' !== part.separator) throw new Error('options.part.separator must be type string or number');
+    if ('undefined' !== typeof part.separator && 'string' !== typeof part.separator) throw new Error('options.part.separator must be type string or number');
 
     opts.parts.push(part);
   });
