@@ -10,14 +10,14 @@ var options = {
       "name": "one",
       "type": "string",
       "regex": "/^[a-z]$/",
-      "default": 'a',
+      "default": '0',
       "separator": "-"
     },
     {
       "name": "two",
       "type": "number",
       "regex": "/^[0-9]$/",
-      "default": 2,
+      "default": 0,
       "separator": "-"
     }
   ],
@@ -31,9 +31,9 @@ var parts = {
 };
 
 var defaults = {
-  '_array': ['a', 2],
-  '_string': 'a-2',
-  '_object': {'one': 'a', 'two': 2}
+  '_array': ['0', 0],
+  '_string': '0-0',
+  '_object': {'one': '0', 'two': 0}
 };
 
 

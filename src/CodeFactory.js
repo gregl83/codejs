@@ -41,7 +41,7 @@ module.exports = function(options) {
 
     if ('undefined' !== typeof part.default && 'string' !== typeof part.default && 'number' !== typeof part.default) throw new Error('options.part.default must be type string or number');
 
-    if ('undefined' !== typeof part.separator && 'string' !== typeof part.separator) part.separator = options.separator;
+    if ('undefined' === typeof part.separator || 'string' !== typeof part.separator) part.separator = options.separator;
 
     opts.parts.push(part);
   });
