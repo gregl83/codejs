@@ -9,19 +9,17 @@ var options = {
     {
       "name": "one",
       "type": "string",
-      "regex": "/^[a-z]$/",
       "default": 'a',
       "separator": "-"
     },
     {
       "name": "two",
       "type": "number",
-      "regex": "/^[0-9]$/",
       "default": 0,
       "separator": "-"
     }
   ],
-  "regex": "/^[a-z]\-[0-9]$/"
+  "regex": "^([a-z0]+)\-([0-9]+)$"
 };
 
 
@@ -125,26 +123,6 @@ describe('code factory', function() {
     should(function() {
       Codejs(opts);
     }).throw();
-
-    done();
-  });
-
-  it('requires options.part.regex type string if set', function(done) {
-    var opts = JSON.parse(JSON.stringify(options));
-    opts.parts[0].regex = /^[a-z]$/;
-
-    should(function() {
-      Codejs(opts);
-    }).throw();
-
-    done();
-  });
-
-  it('options.part.regex can be undefined', function(done) {
-    var opts = JSON.parse(JSON.stringify(options));
-    delete opts.parts[0].regex;
-
-    Codejs(opts);
 
     done();
   });

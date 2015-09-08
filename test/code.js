@@ -9,19 +9,17 @@ var options = {
     {
       "name": "one",
       "type": "string",
-      "regex": "/^[a-z]$/",
       "default": '0',
       "separator": "-"
     },
     {
       "name": "two",
       "type": "number",
-      "regex": "/^[0-9]$/",
       "default": 0,
       "separator": "-"
     }
   ],
-  "regex": "/^[a-z]\-[0-9]$/"
+  "regex": "^([a-z0]+)\-([0-9]+)$"
 };
 
 var parts = {
@@ -94,6 +92,19 @@ describe('code class', function() {
     (defaults._array).should.eql(code.toArray());
     (defaults._string).should.eql(code.toString());
     (defaults._object).should.eql(code.toObject());
+
+    done();
+  });
+
+  it('requires parts array regex match toString', function(done) {
+    var opts = JSON.parse(JSON.stringify(options));
+    opts.regex = '^$';
+
+    var Code = Codejs(opts);
+
+    should(function() {
+      new Code(parts._array);
+    }).throw();
 
     done();
   });
@@ -194,6 +205,19 @@ describe('code class', function() {
     done();
   });
 
+  it('requires parts string regex match toString', function(done) {
+    var opts = JSON.parse(JSON.stringify(options));
+    opts.regex = '^$';
+
+    var Code = Codejs(opts);
+
+    should(function() {
+      new Code(parts._string);
+    }).throw();
+
+    done();
+  });
+
   it('supports parts object', function(done) {
     var opts = JSON.parse(JSON.stringify(options));
 
@@ -234,6 +258,19 @@ describe('code class', function() {
 
     should(function() {
       new Code({'one': null, 'two': undefined});
+    }).throw();
+
+    done();
+  });
+
+  it('requires parts object regex match toString', function(done) {
+    var opts = JSON.parse(JSON.stringify(options));
+    opts.regex = '^$';
+
+    var Code = Codejs(opts);
+
+    should(function() {
+      new Code(parts._object);
     }).throw();
 
     done();

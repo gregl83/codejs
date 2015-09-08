@@ -30,4 +30,30 @@ describe('integration', function() {
 
     done();
   });
+
+  it('last part omitted from parts string', function(done) {
+    var options = {
+      separator: '|',
+      parts: [
+        {name:'a', type:'string', default:'a'},
+        {name:'b', type:'string', default:'b'},
+        {name:'c', type:'string', default:'c'},
+        {name:'d', type:'string', default:'d'}
+      ]
+    };
+
+    var Code = Codejs(options);
+
+    var code = new Code('abc|def|ghi');
+
+    (code).should.be.instanceOf(Code);
+
+    (code.toArray()).should.eql(['abc', 'def', 'ghi', 'd']);
+    (code.toString()).should.eql('abc|def|ghi|d');
+    (code.toObject()).should.eql({a:'abc', b:'def', c:'ghi', d:'d'});
+
+    (Object.isFrozen(code)).should.be.true;
+
+    done();
+  });
 });

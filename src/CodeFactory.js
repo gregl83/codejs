@@ -3,7 +3,7 @@
  *
  * @param {object} options
  * @param {string} options.separator
- * @param {{name:string, type:string|number, [regex]:string|RegExp, [default]:string|number, [separator]:string}[]} options.parts
+ * @param {{name:string, type:string|number, [regex]:string, [default]:string|number, [separator]:string}[]} options.parts
  * @param {string|RegExp} [options.regex]
  * @returns {Code} class
  * @throws {error}
@@ -33,11 +33,6 @@ module.exports = function(options) {
     if ('string' !== typeof part.name) throw new Error('options.part.name must be type string');
 
     if ('string' !== part.type && 'number' !== part.type) throw new Error('options.part.type must be "string" or "number"');
-
-    if ('undefined' !== typeof part.regex) {
-      if ('string' === typeof part.regex) part.regex = new RegExp(part.regex);
-      else throw new Error('options.part.regex must be type string');
-    }
 
     if ('undefined' !== typeof part.default && 'string' !== typeof part.default && 'number' !== typeof part.default) throw new Error('options.part.default must be type string or number');
 
@@ -70,6 +65,8 @@ module.exports = function(options) {
       self._string += (i !== partsLastIndex) ? value + part.separator : value;
       self._object[part.name] = value;
     }
+
+    if ('object' === typeof opts.regex && !opts.regex.test(self._string)) throw new Error('parts failed regex test');
   }
 
   /**
@@ -87,10 +84,9 @@ module.exports = function(options) {
       var part = opts.parts[i];
 
       var index, value;
-      var noIndexString = (i !== partsLastIndex) ? '' : string;
       index = string.indexOf(part.separator);
-      value = (-1 === index) ? noIndexString : string.substr(0, index);
-      string = (-1 === index) ? noIndexString : string.substr(index + 1);
+      value = (-1 === index) ? string : string.substr(0, index);
+      string = (-1 === index) ? '' : string.substr(index + 1);
 
       if (0 === value.length) {
         if ('undefined' !== typeof part.default) value = part.default;
@@ -104,6 +100,7 @@ module.exports = function(options) {
       self._object[part.name] = value;
     }
 
+    if ('object' === typeof opts.regex && !opts.regex.test(self._string)) throw new Error('parts failed regex test');
   }
 
   /**
@@ -130,6 +127,8 @@ module.exports = function(options) {
       self._string += (i !== partsLastIndex) ? value + part.separator : value;
       self._object[part.name] = value;
     }
+
+    if ('object' === typeof opts.regex && !opts.regex.test(self._string)) throw new Error('parts failed regex test');
   }
 
 
