@@ -162,6 +162,25 @@ describe('code class', function() {
     done();
   });
 
+  it('defaults with parts string set to empty separators', function(done) {
+    var opts = JSON.parse(JSON.stringify(options));
+    opts.parts[0].type = 'number';
+
+    var Code = Codejs(opts);
+
+    var code = new Code('--');
+
+    (code).should.be.instanceOf(Code);
+
+    (defaults._array).should.eql(code.toArray());
+    (defaults._string).should.eql(code.toString());
+    (defaults._object).should.eql(code.toObject());
+
+    (Object.isFrozen(code)).should.be.true;
+
+    done();
+  });
+
   it('requires valid types in parts string sans defaults', function(done) {
     var opts = JSON.parse(JSON.stringify(options));
     delete opts.parts[0].default;

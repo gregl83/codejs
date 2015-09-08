@@ -86,13 +86,11 @@ module.exports = function(options) {
     for (var i=0; i<=partsLastIndex; i++) {
       var part = opts.parts[i];
 
-      var value;
-      if (i !== partsLastIndex) {
-        var index = string.indexOf(part.separator);
-        value = (-1 === index) ? '' : string.substr(0, index);
-        string = (-1 === index) ? '' : string.substr(index + 1);
-      }
-      else value = string;
+      var index, value;
+      var noIndexString = (i !== partsLastIndex) ? '' : string;
+      index = string.indexOf(part.separator);
+      value = (-1 === index) ? noIndexString : string.substr(0, index);
+      string = (-1 === index) ? noIndexString : string.substr(index + 1);
 
       if (0 === value.length) {
         if ('undefined' !== typeof part.default) value = part.default;
