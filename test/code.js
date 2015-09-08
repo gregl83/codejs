@@ -55,6 +55,8 @@ describe('code class', function() {
     (parts._string).should.eql(code.toString());
     (parts._object).should.eql(code.toObject());
 
+    (Object.isFrozen(code)).should.be.true;
+
     done();
   });
 
@@ -71,6 +73,8 @@ describe('code class', function() {
     (parts._string).should.eql(code.toString());
     (parts._object).should.eql(code.toObject());
 
+    (Object.isFrozen(code)).should.be.true;
+
     done();
   });
 
@@ -86,6 +90,8 @@ describe('code class', function() {
     (parts._array).should.eql(code.toArray());
     (parts._string).should.eql(code.toString());
     (parts._object).should.eql(code.toObject());
+
+    (Object.isFrozen(code)).should.be.true;
 
     done();
   });

@@ -120,6 +120,8 @@ module.exports = function(options) {
   /**
    * Code Class
    *
+   * Note: Immutable
+   *
    * @param {array|string|object} parts
    * @constructor
    */
@@ -141,6 +143,8 @@ module.exports = function(options) {
     } else if ('object' === typeof parts) {
       parseObject.call(self, parts);
     }
+
+    Object.freeze(self);
   }
 
   /**
