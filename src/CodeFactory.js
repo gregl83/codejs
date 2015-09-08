@@ -1,15 +1,3 @@
-function processArray() {
-  var self = this;
-}
-
-function processString() {
-  var self = this;
-}
-
-function processObject() {
-  var self = this;
-}
-
 /**
  * Build Code class
  *
@@ -27,7 +15,6 @@ module.exports = function(options) {
 
   // build class options
   var opts = {
-    "separator": options.separator,
     "parts": [],
     "regex": undefined
   };
@@ -51,36 +38,134 @@ module.exports = function(options) {
 
     if ('undefined' !== typeof part.default && 'string' !== typeof part.default && 'number' !== typeof part.default) throw new Error('options.part.default must be type string or number');
 
-    if ('undefined' !== typeof part.separator && 'string' !== typeof part.separator) throw new Error('options.part.separator must be type string or number');
+    if ('undefined' !== typeof part.separator && 'string' !== typeof part.separator) part.separator = options.separator;
 
     opts.parts.push(part);
   });
 
-  /*
-   todo
-   1-1-1-1
-
-   parts
-   type
-   separators
-   validation
-
-   parse
+  /**
+   * Parse code parts array
+   *
+   * @param array
    */
+  function parseArray(array) {
+    var self = this;
 
+    var partsLastIndex = opts.parts.length - 1;
+
+    for (var i=0; i<=partsLastIndex; i++) {
+      var part = opts.parts[i];
+
+      var value = array[i];
+
+      self._array.push(value);
+      self._string += (i !== partsLastIndex) ? value + part.separator : value;
+      self._object[part.name] = value;
+    }
+  }
+
+  /**
+   * Parse code parts string
+   *
+   * @param {string} string
+   */
+  function parseString(string) {
+    var self = this;
+
+    self._string = string;
+
+    var partsLastIndex = opts.parts.length - 1;
+
+    for (var i=0; i<=partsLastIndex; i++) {
+      var part = opts.parts[i];
+
+      var value;
+      if (i !== partsLastIndex) {
+        var index = string.indexOf(part.separator);
+        value = string.substr(0, index);
+        string = string.substr(index + 1);
+      }
+      else value = string;
+
+      if ('number' === part.type) value = parseInt(value);
+
+      self._array.push(value);
+      self._object[part.name] = value;
+    }
+
+  }
+
+  /**
+   * Parse code parts object
+   *
+   * @param {object} object
+   */
+  function parseObject(object) {
+    var self = this;
+
+    var partsLastIndex = opts.parts.length - 1;
+
+    for (var i=0; i<=partsLastIndex; i++) {
+      var part = opts.parts[i];
+
+      var value = object[part.name];
+
+      self._array.push(value);
+      self._string += (i !== partsLastIndex) ? value + part.separator : value;
+      self._object[part.name] = value;
+    }
+  }
+
+
+  /**
+   * Code Class
+   *
+   * @param {array|string|object} parts
+   * @constructor
+   */
   function Code(parts) {
     var self = this;
 
-    if (Array.isArray(parts) && 'string' !== typeof parts && 'object' !== typeof parts) throw new Error('parts must be type array, string, or object');
+    if (!Array.isArray(parts) && 'string' !== typeof parts && 'object' !== typeof parts) throw new Error('parts must be type array, string, or object');
+
+    // todo strict opts.parts size check ? (default values w/ null or undefined)
+
+    self._array = [];
+    self._string = '';
+    self._object = {};
 
     if (Array.isArray(parts)) {
-      processArray.call(self, parts);
+      parseArray.call(self, parts);
     } else if ('string' === typeof parts) {
-      processString.call(self, parts);
+      parseString.call(self, parts);
     } else if ('object' === typeof parts) {
-      processObject.call(self, parts);
+      parseObject.call(self, parts);
     }
   }
+
+  /**
+   * Code to array
+   * @returns {Array}
+   */
+  Code.prototype.toArray = function() {
+    return this._array;
+  };
+
+  /**
+   * Code to string
+   * @returns {string}
+   */
+  Code.prototype.toString = function() {
+    return this._string;
+  };
+
+  /**
+   * Code to object
+   * @returns {{}|*}
+   */
+  Code.prototype.toObject = function() {
+    return this._object;
+  };
 
   return Code;
 };

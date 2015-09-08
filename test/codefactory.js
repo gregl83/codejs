@@ -21,7 +21,7 @@ var options = {
       "separator": "-"
     }
   ],
-  "regex": "/^[0-9]\-[0-9]$/"
+  "regex": "/^[a-z]\-[0-9]$/"
 };
 
 
@@ -161,20 +161,9 @@ describe('code factory', function() {
     done();
   });
 
-  it('requires options.part.separator type string', function(done) {
+  it('sets options.part.separator to options.separator if type is not string', function(done) {
     var opts = JSON.parse(JSON.stringify(options));
     opts.parts[0].separator = 1;
-
-    should(function() {
-      Codejs(opts);
-    }).throw();
-
-    done();
-  });
-
-  it('options.part.separator can be undefined', function(done) {
-    var opts = JSON.parse(JSON.stringify(options));
-    delete opts.parts[0].separator;
 
     Codejs(opts);
 
