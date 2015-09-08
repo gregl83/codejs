@@ -48,18 +48,6 @@ describe('code class', function() {
     sandbox.restore();
   });
 
-  it('requires valid parts argument', function(done) {
-    var opts = JSON.parse(JSON.stringify(options));
-
-    var Code = Codejs(opts);
-
-    should(function() {
-      new Code(undefined);
-    }).throw();
-
-    done();
-  });
-
   it('supports parts array', function(done) {
     var opts = JSON.parse(JSON.stringify(options));
 
@@ -72,6 +60,24 @@ describe('code class', function() {
     (parts._array).should.eql(code.toArray());
     (parts._string).should.eql(code.toString());
     (parts._object).should.eql(code.toObject());
+
+    (Object.isFrozen(code)).should.be.true;
+
+    done();
+  });
+
+  it('defaults parts to array when invalid type', function(done) {
+    var opts = JSON.parse(JSON.stringify(options));
+
+    var Code = Codejs(opts);
+
+    var code = new Code(undefined);
+
+    (code).should.be.instanceOf(Code);
+
+    (defaults._array).should.eql(code.toArray());
+    (defaults._string).should.eql(code.toString());
+    (defaults._object).should.eql(code.toObject());
 
     (Object.isFrozen(code)).should.be.true;
 

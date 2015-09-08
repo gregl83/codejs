@@ -140,14 +140,14 @@ module.exports = function(options) {
    *
    * Note: Immutable
    *
-   * @param {array|string|object} parts
+   * @param {array|string|object} [parts]
    * @constructor
    * @throws {error}
    */
   function Code(parts) {
     var self = this;
 
-    if (!Array.isArray(parts) && 'string' !== typeof parts && 'object' !== typeof parts) throw new Error('parts must be type array, string, or object');
+    if (!Array.isArray(parts) && 'string' !== typeof parts && 'object' !== typeof parts) parts = [];
 
     self._array = [];
     self._string = '';
