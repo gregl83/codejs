@@ -57,6 +57,10 @@ module.exports = function(options) {
       var part = opts.parts[i];
 
       var value = array[i];
+      if (part.type !== typeof value) {
+        if ('undefined' !== typeof part.default) value = part.default;
+        else throw new Error('part.type must be type ' + part.type);
+      }
 
       self._array.push(value);
       self._string += (i !== partsLastIndex) ? value + part.separator : value;
@@ -72,8 +76,6 @@ module.exports = function(options) {
   function parseString(string) {
     var self = this;
 
-    self._string = string;
-
     var partsLastIndex = opts.parts.length - 1;
 
     for (var i=0; i<=partsLastIndex; i++) {
@@ -87,9 +89,15 @@ module.exports = function(options) {
       }
       else value = string;
 
-      if ('number' === part.type) value = parseInt(value);
+      if (0 === value.length) {
+        if ('undefined' !== typeof part.default) value = part.default;
+        else throw new Error('part.type must be type ' + part.type);
+      } else if ('number' === part.type) {
+        value = parseInt(value);
+      }
 
       self._array.push(value);
+      self._string += (i !== partsLastIndex) ? value + part.separator : value;
       self._object[part.name] = value;
     }
 
@@ -109,6 +117,10 @@ module.exports = function(options) {
       var part = opts.parts[i];
 
       var value = object[part.name];
+      if (part.type !== typeof value) {
+        if ('undefined' !== typeof part.default) value = part.default;
+        else throw new Error('part.type must be type ' + part.type);
+      }
 
       self._array.push(value);
       self._string += (i !== partsLastIndex) ? value + part.separator : value;

@@ -30,6 +30,12 @@ var parts = {
   '_object': {'one': 'a', 'two': 2}
 };
 
+var defaults = {
+  '_array': ['a', 2],
+  '_string': 'a-2',
+  '_object': {'one': 'a', 'two': 2}
+};
+
 
 var sandbox;
 
@@ -42,7 +48,7 @@ describe('code class', function() {
     sandbox.restore();
   });
 
-  it('new code instance with parts array', function(done) {
+  it('using parts array', function(done) {
     var opts = JSON.parse(JSON.stringify(options));
 
     var Code = Codejs(opts);
@@ -60,7 +66,34 @@ describe('code class', function() {
     done();
   });
 
-  it('new code instance with parts string', function(done) {
+  it('defaults with parts array', function(done) {
+    var opts = JSON.parse(JSON.stringify(options));
+
+    var Code = Codejs(opts);
+
+    var code = new Code([null, undefined]);
+
+    (defaults._array).should.eql(code.toArray());
+    (defaults._string).should.eql(code.toString());
+    (defaults._object).should.eql(code.toObject());
+
+    done();
+  });
+
+  it('requires valid types in parts array sans defaults', function(done) {
+    var opts = JSON.parse(JSON.stringify(options));
+    delete opts.parts[0].default;
+
+    var Code = Codejs(opts);
+
+    should(function() {
+      new Code([null, undefined]);
+    }).throw();
+
+    done();
+  });
+
+  it('using parts string', function(done) {
     var opts = JSON.parse(JSON.stringify(options));
 
     var Code = Codejs(opts);
@@ -78,7 +111,34 @@ describe('code class', function() {
     done();
   });
 
-  it('new code instance with parts object', function(done) {
+  it('defaults with parts string', function(done) {
+    var opts = JSON.parse(JSON.stringify(options));
+
+    var Code = Codejs(opts);
+
+    var code = new Code('-');
+
+    (defaults._array).should.eql(code.toArray());
+    (defaults._string).should.eql(code.toString());
+    (defaults._object).should.eql(code.toObject());
+
+    done();
+  });
+
+  it('requires valid types in parts string sans defaults', function(done) {
+    var opts = JSON.parse(JSON.stringify(options));
+    delete opts.parts[0].default;
+
+    var Code = Codejs(opts);
+
+    should(function() {
+      new Code('-');
+    }).throw();
+
+    done();
+  });
+
+  it('using parts object', function(done) {
     var opts = JSON.parse(JSON.stringify(options));
 
     var Code = Codejs(opts);
@@ -92,6 +152,33 @@ describe('code class', function() {
     (parts._object).should.eql(code.toObject());
 
     (Object.isFrozen(code)).should.be.true;
+
+    done();
+  });
+
+  it('defaults with parts object', function(done) {
+    var opts = JSON.parse(JSON.stringify(options));
+
+    var Code = Codejs(opts);
+
+    var code = new Code({'one': null, 'two': undefined});
+
+    (defaults._array).should.eql(code.toArray());
+    (defaults._string).should.eql(code.toString());
+    (defaults._object).should.eql(code.toObject());
+
+    done();
+  });
+
+  it('requires valid types in parts object sans defaults', function(done) {
+    var opts = JSON.parse(JSON.stringify(options));
+    delete opts.parts[0].default;
+
+    var Code = Codejs(opts);
+
+    should(function() {
+      new Code({'one': null, 'two': undefined});
+    }).throw();
 
     done();
   });
