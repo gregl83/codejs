@@ -48,6 +48,18 @@ describe('code class', function() {
     sandbox.restore();
   });
 
+  it('invalid parts argument', function(done) {
+    var opts = JSON.parse(JSON.stringify(options));
+
+    var Code = Codejs(opts);
+
+    should(function() {
+      new Code({});
+    }).throw();
+
+    done();
+  });
+
   it('using parts array', function(done) {
     var opts = JSON.parse(JSON.stringify(options));
 

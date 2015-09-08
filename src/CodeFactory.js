@@ -142,8 +142,6 @@ module.exports = function(options) {
 
     if (!Array.isArray(parts) && 'string' !== typeof parts && 'object' !== typeof parts) throw new Error('parts must be type array, string, or object');
 
-    // todo strict opts.parts size check ? (default values w/ null or undefined)
-
     self._array = [];
     self._string = '';
     self._object = {};
