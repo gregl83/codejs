@@ -1,7 +1,7 @@
 {
   "name": "codejs",
   "version": "0.1.0",
-  "description": "JavaScript Code Class for NodeJS and Browser",
+  "description": "JavaScript Code class for NodeJS and Browsers",
   "author": "Gregory Langlais",
   "private": false,
   "keywords": [

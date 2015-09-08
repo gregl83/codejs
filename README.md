@@ -1,6 +1,8 @@
+[![Build Status](https://travis-ci.org/gregl83/codejs.svg?branch=master)](https://travis-ci.org/gregl83/codejs)
+[![Coverage Status](https://coveralls.io/repos/gregl83/codejs/badge.svg)](https://coveralls.io/r/gregl83/codejs?branch=master)
 # codejs
 
-JavaScript Code Class for NodeJS and Browser
+JavaScript Code class for NodeJS and Browsers
 
 Codejs provides a robust class factory for compound codes with character separator(s) or delimiter(s).
 
