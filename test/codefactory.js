@@ -36,6 +36,14 @@ describe('code factory', function() {
     sandbox.restore();
   });
 
+  it('requires valid options object', function(done) {
+    should(function() {
+      Codejs(undefined);
+    }).throw();
+
+    done();
+  });
+
   it('builds new Code class with options', function(done) {
     var opts = JSON.parse(JSON.stringify(options));
 

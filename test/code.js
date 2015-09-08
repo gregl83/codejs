@@ -48,19 +48,19 @@ describe('code class', function() {
     sandbox.restore();
   });
 
-  it('invalid parts argument', function(done) {
+  it('requires valid parts argument', function(done) {
     var opts = JSON.parse(JSON.stringify(options));
 
     var Code = Codejs(opts);
 
     should(function() {
-      new Code({});
+      new Code(undefined);
     }).throw();
 
     done();
   });
 
-  it('using parts array', function(done) {
+  it('supports parts array', function(done) {
     var opts = JSON.parse(JSON.stringify(options));
 
     var Code = Codejs(opts);
@@ -105,7 +105,7 @@ describe('code class', function() {
     done();
   });
 
-  it('using parts string', function(done) {
+  it('supports parts string', function(done) {
     var opts = JSON.parse(JSON.stringify(options));
 
     var Code = Codejs(opts);
@@ -150,7 +150,7 @@ describe('code class', function() {
     done();
   });
 
-  it('using parts object', function(done) {
+  it('supports parts object', function(done) {
     var opts = JSON.parse(JSON.stringify(options));
 
     var Code = Codejs(opts);

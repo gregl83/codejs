@@ -6,9 +6,12 @@
  * @param {{name:string, type:string|number, [regex]:string|RegExp, [default]:string|number, [separator]:string}[]} options.parts
  * @param {string|RegExp} [options.regex]
  * @returns {Code} class
+ * @throws {error}
  */
 module.exports = function(options) {
   // validate options main properties
+  if ('object' !== typeof options) throw new Error('valid options object is required');
+
   if ('string' !== typeof options.separator) throw new Error('options.separator must be type string');
 
   if (!Array.isArray(options.parts) || 0 === options.parts.length) throw new Error('options.parts must be type array');
@@ -47,6 +50,7 @@ module.exports = function(options) {
    * Parse code parts array
    *
    * @param array
+   * @throws {error}
    */
   function parseArray(array) {
     var self = this;
@@ -72,6 +76,7 @@ module.exports = function(options) {
    * Parse code parts string
    *
    * @param {string} string
+   * @throws {error}
    */
   function parseString(string) {
     var self = this;
@@ -107,6 +112,7 @@ module.exports = function(options) {
    * Parse code parts object
    *
    * @param {object} object
+   * @throws {error}
    */
   function parseObject(object) {
     var self = this;
@@ -136,6 +142,7 @@ module.exports = function(options) {
    *
    * @param {array|string|object} parts
    * @constructor
+   * @throws {error}
    */
   function Code(parts) {
     var self = this;
