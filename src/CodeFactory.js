@@ -89,8 +89,8 @@ module.exports = function(options) {
       var value;
       if (i !== partsLastIndex) {
         var index = string.indexOf(part.separator);
-        value = string.substr(0, index);
-        string = string.substr(index + 1);
+        value = (-1 === index) ? '' : string.substr(0, index);
+        string = (-1 === index) ? '' : string.substr(index + 1);
       }
       else value = string;
 
