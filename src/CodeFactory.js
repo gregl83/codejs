@@ -3,7 +3,7 @@
  *
  * @param {object} options
  * @param {string} options.separator
- * @param {{name:string, type:string|number, [regex]:string, [default]:string|number, [separator]:string}[]} options.parts
+ * @param {{name:string, type:string|number, [default]:string|number, [separator]:string}[]} options.parts
  * @param {string|RegExp} [options.regex]
  * @returns {Code} class
  * @throws {error}
