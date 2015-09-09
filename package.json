@@ -1,6 +1,6 @@
 {
   "name": "codejs",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "JavaScript Code class for NodeJS and Browsers",
   "author": "Gregory Langlais",
   "private": false,
@@ -31,7 +31,8 @@
     "sinon": "1.14.x",
     "coveralls": "2.11.x",
     "istanbul": "0.3.x",
-    "browserify": "11.0.x"
+    "browserify": "11.0.x",
+    "uglifyify": "3.0.x"
   },
   "dependencies": {},
   "license": "MIT"

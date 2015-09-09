@@ -24,5 +24,11 @@ files.forEach(function(file) {
 var out = fs.createWriteStream(filepath);
 
 var b = browserify();
-b.add('./');
+
+b.transform({
+  global: true
+}, 'uglifyify');
+
+b.add('./main.js');
+
 b.bundle().pipe(out);
