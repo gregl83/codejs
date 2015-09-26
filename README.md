@@ -6,7 +6,7 @@ JavaScript Code class for NodeJS and Browsers
 
 Codejs provides a robust class factory for compound codes with character separator(s) or delimiter(s).
 
-Create new code objects or re-build existing ones from data in a supported formats (`array`, `string`, or `object`).
+Create new code objects or re-build existing ones using data in one of the supported formats (`array`, `string`, or `object`).
 
 Features include code segment type checking, default segment values, and regex code validation.
 
