@@ -162,6 +162,16 @@ module.exports = function(options) {
   }
 
   /**
+   * Get Code part by name
+   *
+   * @param {string} name
+   * @returns {string|number|undefined}
+   */
+  Code.prototype.get = function(name) {
+    return this._object[name];
+  };
+
+  /**
    * Code to array
    * @returns {Array}
    */

@@ -122,6 +122,19 @@ describe('code class', function() {
     done();
   });
 
+  it('gets part by name with parts array', function(done) {
+    var opts = JSON.parse(JSON.stringify(options));
+
+    var Code = Codejs(opts);
+
+    var code = new Code(parts._array);
+
+    (parts._array[0]).should.eql(code.get('one'));
+    (parts._array[1]).should.eql(code.get('two'));
+
+    done();
+  });
+
   it('supports parts string', function(done) {
     var opts = JSON.parse(JSON.stringify(options));
 
@@ -218,6 +231,19 @@ describe('code class', function() {
     done();
   });
 
+  it('gets part by name with parts string', function(done) {
+    var opts = JSON.parse(JSON.stringify(options));
+
+    var Code = Codejs(opts);
+
+    var code = new Code(parts._string);
+
+    (parts._array[0]).should.eql(code.get('one'));
+    (parts._array[1]).should.eql(code.get('two'));
+
+    done();
+  });
+
   it('supports parts object', function(done) {
     var opts = JSON.parse(JSON.stringify(options));
 
@@ -272,6 +298,19 @@ describe('code class', function() {
     should(function() {
       new Code(parts._object);
     }).throw();
+
+    done();
+  });
+
+  it('gets part by name with parts object', function(done) {
+    var opts = JSON.parse(JSON.stringify(options));
+
+    var Code = Codejs(opts);
+
+    var code = new Code(parts._object);
+
+    (parts._array[0]).should.eql(code.get('one'));
+    (parts._array[1]).should.eql(code.get('two'));
 
     done();
   });
