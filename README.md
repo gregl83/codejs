@@ -66,7 +66,13 @@ var code = new Code("a-b");
 // cast code instance in various formats
 var codeArray = code.toArray();
 var codeString = code.toString();
-var codeObject = code.toObject(); 
+var codeObject = code.toObject();
+
+// get code parts by name
+var alpha = code.get('alpha');
+var beta = code.get('beta');
+
+var valueUndefined = code.get('undefined');
 ```
 
 The above first creates a new Code class and then creates a instance of that class.
